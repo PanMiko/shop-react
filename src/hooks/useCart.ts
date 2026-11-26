@@ -1,8 +1,31 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { CartItem, Product } from '../types';
 
+const STORAGE_KEY = 'cart';
+
+function readCart(): CartItem[] {
+  try {
+    const stored = window.sessionStorage.getItem(STORAGE_KEY);
+    return stored ? (JSON.parse(stored) as CartItem[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeCart(items: CartItem[]) {
+  try {
+    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    // Storage can be unavailable or full; the cart still works in memory.
+  }
+}
+
 export function useCart() {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(readCart);
+
+  useEffect(() => {
+    writeCart(items);
+  }, [items]);
 
   const addItem = (product: Product) => {
     const existing = items.find((item) => item.product.id === product.id);
