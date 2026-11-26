@@ -20,12 +20,11 @@ function readFilters(): Filters {
 }
 
 function writeFilters(filters: Filters) {
-  const params = new URLSearchParams();
-  (Object.keys(filters) as (keyof Filters)[]).forEach((key) => {
-    if (filters[key] !== DEFAULT_FILTERS[key]) params.set(key, String(filters[key]));
-  });
+  const query = (Object.keys(filters) as (keyof Filters)[])
+    .filter((key) => filters[key] !== DEFAULT_FILTERS[key])
+    .map((key) => `${key}=${filters[key]}`)
+    .join('&');
 
-  const query = params.toString();
   window.history.pushState(null, '', query ? `?${query}` : window.location.pathname);
 }
 
