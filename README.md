@@ -9,8 +9,7 @@ went through a proper review, and we keep getting complaints.
 ## Your task
 
 1. Run the app and explore it. Tell us what you see.
-2. Make a list of the problems you find: functional, UX/visual, accessibility,
-   code. There is no list of known issues: finding them is part of the task.
+2. Review the code and make a list of the problems you find.
 3. Prioritize the list, then fix as much as you can, starting with what matters most.
 4. For anything you don't fix, tell us how you would approach it.
 
